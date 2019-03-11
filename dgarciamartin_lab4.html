@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<title>ITMD 565 Lab 4 - dgarciamartin</title>
+
+	<style type="text/css">
+		#wrapper{
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px 40px;
+			text-align: center;
+		}
+		table{
+			width: 80%;
+			align: center;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		th,td{
+			padding:10px;
+			text-align:center;
+		}
+	</style>
+
+</head>
+<body style="background-color: #e6fffa">
+	<div id="wrapper" class="jumbotron text-center" style="margin-bottom:8px; background-color: #b3fff0; padding-bottom:3px">
+		<h1 class="text-center" style="font-family: Impact">ITMD - 565 - Lab 4</h1>
+		<h2 class="text-center" style="font-family: Comic Sans MS; font-size: 26px">David Garcia Martin - dgarciamartin@hawk.iit.edu</h2>
+		<button id="loadBtn" class="btn btn-outline-primary" >Load Data</button>
+		<button id="resetBtn" class="btn btn-outline-info">Reset</button>
+		<h2 class="text-center" style="font-family: Typewriter; padding-top: 10px;">Employee List</h2>
+	</div>
+
+	<div id="wrapperTable">
+	</div>
+	
+	<script type="text/javascript">
+		document.getElementById('resetBtn').disabled = true;
+		document.getElementById('resetBtn').setAttribute('class','btn btn-outline-info text-muted');
+
+		var table = document.createElement('table');
+		table.setAttribute('class','table-bordered table-dark');
+
+        var row1 = table.insertRow(0);
+        row1.setAttribute('class','table-dark bg-dark text-center');
+
+        var cellid1 = document.createElement('th');
+        cellid1.setAttribute('class','bg-dark align-middle text-center');
+        var empid1 = document.createTextNode("ID");
+        cellid1.appendChild(empid1);
+        row1.appendChild(cellid1);
+
+        var cellfirstname1 = document.createElement('th');
+        cellfirstname1.setAttribute('class','bg-dark align-middle text-center');
+        var empfirstname1 = document.createTextNode("First Name");
+        cellfirstname1.appendChild(empfirstname1);
+        row1.appendChild(cellfirstname1);
+
+        var celllastname1= document.createElement('th');
+        celllastname1.setAttribute('class','bg-dark align-middle text-center');
+        var emplastname1 = document.createTextNode("Last Name");
+        celllastname1.appendChild(emplastname1);
+        row1.appendChild(celllastname1);
+
+        var celltitle1 = document.createElement('th');
+        celltitle1.setAttribute('class','bg-dark align-middle text-center');
+        var emptitle1 = document.createTextNode("Title");
+        celltitle1.appendChild(emptitle1);
+        row1.appendChild(celltitle1);
+
+        var cellemail1 = document.createElement('th');
+        cellemail1.setAttribute('class','bg-dark align-middle text-center');
+        var empemail1 = document.createTextNode("Email");
+        cellemail1.appendChild(empemail1);
+        row1.appendChild(cellemail1);
+
+        var cellgender1 = document.createElement('th');
+        cellgender1.setAttribute('class','bg-dark align-middle text-center');
+        var empgender1 = document.createTextNode("Gender");
+        cellgender1.appendChild(empgender1);
+        row1.appendChild(cellgender1);
+
+        var cellactive1 = document.createElement('th');
+        cellactive1.setAttribute('class','bg-dark align-middle text-center');
+        var empactive1 = document.createTextNode("Active");
+        cellactive1.appendChild(empactive1);
+        row1.appendChild(cellactive1);
+
+        table.appendChild(row1);
+        document.getElementById('wrapperTable').appendChild(table);
+
+		document.getElementById('loadBtn').addEventListener('click', function(){
+        var myRequest = new XMLHttpRequest();
+
+        myRequest.addEventListener('load', function(evt){
+            console.log(evt);
+            var a = JSON.parse(evt.target.responseText);
+
+            for(var i = 0; i < a.length; i++) {
+                console.log(a[i]);
+                var row = document.createElement('tr');
+                row.setAttribute('class','table-dark');
+
+                var cellid = document.createElement('td');
+                var empid = document.createTextNode(a[i]["id"]);
+                cellid.appendChild(empid);
+                cellid.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(cellid);
+
+                var cellfirstname = document.createElement('td');
+                var empfirstname = document.createTextNode(a[i]["first_name"]);
+                cellfirstname.appendChild(empfirstname);
+                cellfirstname.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(cellfirstname);
+
+                var celllastname = document.createElement('td');
+                var emplastname = document.createTextNode(a[i]["last_name"]);
+                celllastname.appendChild(emplastname);
+                celllastname.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(celllastname);
+
+                var celltitle = document.createElement('td');
+                var emptitle = document.createTextNode(a[i]["title"]);
+                celltitle.appendChild(emptitle);
+                celltitle.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(celltitle);
+
+                var cellemail = document.createElement('td');
+                var empemail = document.createTextNode(a[i]["email"]);
+                cellemail.appendChild(empemail);
+                cellemail.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(cellemail);
+
+				var cellgender = document.createElement('td');
+                var empgender = document.createTextNode(a[i]["gender"]);
+                cellgender.appendChild(empgender);
+                cellgender.setAttribute('class','table-dark align-middle text-center');
+                row.appendChild(cellgender);
+
+                var cellactive = document.createElement('td');
+                var empactive = document.createTextNode(a[i]["active"]);
+                cellactive.appendChild(empactive);
+                if (a[i]["active"]==true){
+                	cellactive.setAttribute('class','p-3 mb-2 bg-success text-white align-middle');
+                }
+                else{
+                	cellactive.setAttribute('class','p-3 mb-2 bg-danger text-white align-middle');
+                }
+                row.appendChild(cellactive);
+
+
+                table.appendChild(row);
+            document.getElementById('resetBtn').disabled = false;
+            document.getElementById('resetBtn').setAttribute('class','btn btn-outline-info');
+
+            }
+            document.getElementById('loadBtn').disabled = true;
+            document.getElementById('loadBtn').setAttribute('class','btn btn-outline-primary text-muted');
+            document.getElementById('wrapperTable').appendChild(table);
+        });
+
+        myRequest.open('GET', 'http://libertyville.rice.iit.edu/scripts/4565_lab4.php', true);
+        
+        myRequest.send();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click',function(){
+        	var table_length = table.rows.length;
+			for (var i=1; i<table_length; i++){
+				table.deleteRow(1);
+			}
+			document.getElementById('loadBtn').disabled = false;
+			document.getElementById('loadBtn').setAttribute('class','btn btn-outline-primary');
+			document.getElementById('resetBtn').disabled = true;
+			document.getElementById('resetBtn').setAttribute('class','btn btn-outline-info text-muted');
+		});
+	</script>
+</body>
+</html>
